@@ -63,15 +63,17 @@ def hk_grade(file_path):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--algorithm', type=str, default='level_grade')
-    parser.add_argument('--file', type=str, default='data/bachelor_grade.txt')
+    parser.add_argument('--bachelor_grade_file', type=str, default='data/bachelor_grade.txt')
+    parser.add_argument('--master_grade_file', type=str, default='data/master_grade.txt')
     args = parser.parse_args()
 
-    res = None
-    if args.algorithm == 'average_grade':
-        res = average_grade(args.file)
-    elif args.algorithm == 'level_grade':
-        res = average_level_grade(args.file)
-    elif args.algorithm == 'hk_grade':
-        res = hk_grade(args.file)
+    for file_path in [args.bachelor_grade_file, args.master_grade_file]:
+        res = None
+        if args.algorithm == 'average_grade':
+            res = average_grade(file_path)
+        elif args.algorithm == 'level_grade':
+            res = average_level_grade(file_path)
+        elif args.algorithm == 'hk_grade':
+            res = hk_grade(file_path)
 
-    print(args.algorithm, res)
+        print(args.algorithm, res)
