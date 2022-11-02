@@ -89,9 +89,30 @@ def neu_cn_grade(file_path):
     return weighted_grades / points
 
 
+def wes_grade(file_path):
+    weighted_grades = 0.0
+    points = 0.0
+    with open(file_path, 'r') as f:
+        for line in f:
+            line = line.strip('\n').split()
+            point = float(line[0])
+            grade = float(line[1])
+            if grade >= 85:
+                weighted_grade = point * 4.0
+            elif grade >= 75:
+                weighted_grade = point * 3.0
+            elif grade >= 60:
+                weighted_grade = point * 2.0
+            else:
+                weighted_grade = 0.0
+            points += point
+            weighted_grades += weighted_grade
+    return weighted_grades / points
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('--algorithm', type=str, default='neu_cn_grade')
+    parser.add_argument('--algorithm', type=str, default='wes')
     parser.add_argument('--bachelor_grade_file', type=str, default='data/bachelor_grade.txt')
     parser.add_argument('--master_grade_file', type=str, default='data/master_grade.txt')
     args = parser.parse_args()
@@ -106,5 +127,7 @@ if __name__ == "__main__":
             res = neu_cn_grade(file_path)
         elif args.algorithm == 'hk_grade':
             res = hk_grade(file_path)
+        elif args.algorithm == 'wes_grade':
+            res = wes_grade(file_path)
 
         print(args.algorithm, res)
